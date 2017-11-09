@@ -22,8 +22,8 @@ import modelo.Provincia;
 
 /**
  * Servlet implementation class Main
- */
-@WebServlet("/adr")
+ */ 
+//@WebServlet("/adr")
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final String usuario = "root";
@@ -65,7 +65,7 @@ public class Main extends HttpServlet {
 				comunidades.put(rs.getInt(1), new ComunidadesAutonomas(rs.getInt(1), rs.getString(2)));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 
 		}
@@ -74,8 +74,7 @@ public class Main extends HttpServlet {
 
 	public ArrayList<Provincia> getAllProvinciasByCA(int comAut) {
 		ArrayList<Provincia> provincias = new ArrayList<Provincia>();
-		// String consulta = "select * from provincias pro JOIN comunidadesautonomas ca
-		// on pro.CodCA = ca.CodCA where pro.CodCA="+ca+"";
+		
 		try {
 			Connection con = getConexion();
 			PreparedStatement pst = con.prepareStatement(

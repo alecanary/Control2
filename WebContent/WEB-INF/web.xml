@@ -29,5 +29,9 @@
       <param-value>root</param-value>
     </init-param>
   </servlet>
+  <servlet-mapping>
+    <servlet-name>Main</servlet-name>
+    <url-pattern>/adr/*</url-pattern>
+  </servlet-mapping>
 
 </web-app>
