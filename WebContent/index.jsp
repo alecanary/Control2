@@ -8,7 +8,7 @@
 </head>
 <body><center><h2>Control 2 </h2></center>
 	<ul>
-		<li><a href="ctrl?oper=obj1"> Ejercicio1</a></li>
+		<li><a href="adr?oper=obj1"> Comunidades y Provincias</a></li>
 	</ul>
 </body>
 </html>
