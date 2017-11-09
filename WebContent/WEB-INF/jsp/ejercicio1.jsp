@@ -5,21 +5,19 @@
 <%@page import="java.util.ArrayList , java.util.HashMap"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	//HttpSession sesion = request.getSession();
-	//ArrayList<String> lista=(ArrayList<String>) request.getAttribute("miLista");
-	ArrayList<ComunidadesAutonomas> lista = (ArrayList<ComunidadesAutonomas>) session.getAttribute("comAuton");
+	
 %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>COntrol2</title>
 </head>
 <body>
 	<div>Lista de Comunidades Autonomas en un Hashmap</div>
 	<%
-		HashMap<Integer, ComunidadesAutonomas> comunidades = (HashMap<Integer, ComunidadesAutonomas>) session
-				.getAttribute("cAut");
+		HashMap<Integer, ComunidadesAutonomas> comunidades = (HashMap<Integer, ComunidadesAutonomas>) session.getAttribute("cAut");
 	%>
 	<form action="adr" method="POST">
 		<input type="hidden" name="oper" value="obj1_2" /> <select
@@ -42,7 +40,7 @@
 		</c:forEach>
 	</ul>
 	<%
-				}
+		}
 			}
 		}
 	%>

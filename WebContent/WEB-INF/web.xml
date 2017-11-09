@@ -4,7 +4,7 @@
   <servlet>
     <description>
 		</description>
-    <display-name>Control2</display-name>
+    <display-name>Main</display-name>
     <servlet-name>Main</servlet-name>
     <servlet-class>controlador.Main</servlet-class>
     <init-param>
