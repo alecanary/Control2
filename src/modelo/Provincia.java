@@ -12,6 +12,13 @@ public class Provincia {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Provincia(int codProvincia, String provincia, int codCA) {
+		super();
+		this.codProvincia = codProvincia;
+		this.provincia = provincia;
+		this.codCA = codCA;
+	}
+
 	public int getCodProvincia() {
 		return codProvincia;
 	}

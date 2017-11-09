@@ -9,6 +9,12 @@ public class ComunidadesAutonomas {
 		// TODO Auto-generated constructor stub
 	}
 
+	public ComunidadesAutonomas(int codCA, String cA) {
+		super();
+		this.codCA = codCA;
+		CA = cA;
+	}
+
 	public int getCodCA() {
 		return codCA;
 	}

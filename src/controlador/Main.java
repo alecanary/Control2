@@ -6,11 +6,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,51 +53,72 @@ public class Main extends HttpServlet {
 		return conexion;
 	}
 
-	public void Ejer1(HttpServletRequest request) {
-	
+	public HashMap<Integer, ComunidadesAutonomas> getAllComunidades() {
+
+		HashMap<Integer, ComunidadesAutonomas> comunidades = new HashMap<Integer, ComunidadesAutonomas>();
+		String consulta = "SELECT * FROM comunidadesautonomas";
 		try {
 			Connection con = getConexion();
-			String CodCA = request.getParameter("CodCA");
-			String CA = request.getParameter("CA");
-			 System.out.println(CodCA + " " + CA);
-
-			
 			PreparedStatement pst = con.prepareStatement("Select * from comunidadesautonomas");
-			pst.setString(1, CodCA);
-			pst.setString(2, CA);
-
-			ResultSet resultado = pst.executeQuery();
-			if (resultado.next()) {
-				ComunidadesAutonomas comunidadAutonoma = new ComunidadesAutonomas();
-				comunidadAutonoma.setCodCA(resultado.getInt(1));
-				comunidadAutonoma.setCA(resultado.getString(2));
-				System.out.println(comunidadAutonoma.getCA());
-				HttpSession sesion = request.getSession();
-				sesion.setAttribute("comAuton", request.getParameter("nombre"));
-
-				
-
-			} else {
-				System.out.println("Usuario NO encontrado");
-				
-
+			ResultSet rs = pst.executeQuery(consulta);
+			while (rs.next()) {
+				comunidades.put(rs.getInt(1), new ComunidadesAutonomas(rs.getInt(1), rs.getString(2)));
 			}
 		} catch (SQLException e) {
-			System.out.println("Error SQL");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
 		}
+		return comunidades;
 	}
-	/*private ComunidadesAutonomas creaCA(ResultSet resultado) throws SQLException, ParseException {
-		ComunidadesAutonomas CA = new ComunidadesAutonomas();
-		CA.setCodCA(resultado.getInt(1));
-		CA.setCA(resultado.getString(2));
-		
 
-		System.out.println(CA.getCA());
+	public ArrayList<Provincia> getAllProvinciasByCA(int comAut) {
+		ArrayList<Provincia> provincias = new ArrayList<Provincia>();
+		// String consulta = "select * from provincias pro JOIN comunidadesautonomas ca
+		// on pro.CodCA = ca.CodCA where pro.CodCA="+ca+"";
+		try {
+			Connection con = getConexion();
+			PreparedStatement pst = con.prepareStatement(
+					"select * from provincias pro JOIN comunidadesautonomas ca on pro.CodCA = ca.CodCA where pro.CodCA="
+							+ comAut + "");
+			ResultSet rs = pst.executeQuery(
+					"select * from provincias pro JOIN comunidadesautonomas ca on pro.CodCA = ca.CodCA where pro.CodCA="
+							+ comAut + "");
+			while (rs.next()) {
+				provincias.add(new Provincia(rs.getInt(1), rs.getString(2), rs.getInt(3)));
+			}
+			return provincias;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-		// LocalDate fecha = FORMATADOR.parse(resultadoBusca.getDate(4));
-		// persona.setFechaNac(fecha);
-		return CA;
-	}*/
+	public void Ejer1(HttpServletRequest request) {
+		HttpSession sesion = request.getSession();
+		if (sesion.getAttribute("cAut") == null) {
+			HashMap<Integer, ComunidadesAutonomas> ComuAut = getAllComunidades();
+			sesion.setAttribute("cAut", ComuAut);
+		}
+		ArrayList<Provincia> provinciasPorCA = new ArrayList<Provincia>();
+		if (sesion.getAttribute("seleccionada") != null) {
+			provinciasPorCA = getAllProvinciasByCA((int) sesion.getAttribute("seleccionada"));
+		}
+		request.setAttribute("provincias", provinciasPorCA);
+
+	}
+	/*
+	 * private ComunidadesAutonomas creaCA(ResultSet resultado) throws SQLException,
+	 * ParseException { ComunidadesAutonomas CA = new ComunidadesAutonomas();
+	 * CA.setCodCA(resultado.getInt(1)); CA.setCA(resultado.getString(2));
+	 * 
+	 * 
+	 * System.out.println(CA.getCA());
+	 * 
+	 * // LocalDate fecha = FORMATADOR.parse(resultadoBusca.getDate(4)); //
+	 * persona.setFechaNac(fecha); return CA; }
+	 */
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -114,13 +134,13 @@ public class Main extends HttpServlet {
 			switch (action) {
 
 			case "obj1":
-				Ejer1(request);
+
 				url = base + "ejercicio1.jsp";
 				break;
 
-			case "obj3_2":
-
-				url = base + "objetivo3.jsp";
+			case "obj1_2":
+				Ejer1(request);
+				url = base + "ejercicio1.jsp";
 
 				break;
 			}
