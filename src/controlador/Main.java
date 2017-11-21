@@ -135,6 +135,7 @@ public class Main extends HttpServlet {
 			case "obj1":
 
 				url = base + "ejercicio1.jsp";
+				System.out.println("pasa por aqui?");
 				break;
 
 			case "obj1_2":

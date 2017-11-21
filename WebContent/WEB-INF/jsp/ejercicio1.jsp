@@ -7,7 +7,6 @@
 <%
 	//@SuppressWarnings("unchecked")
 	//HttpSession sesion = request.getSession();
-	
 %>
 <html>
 <head>
@@ -35,8 +34,8 @@
 				if (provincias.size() != 0) {
 	%>
 	<ul>
-		<c:forEach var="obj" items="${provincias}">
-			<li>${obj.getProvincia()}</li>
+		<c:forEach items="${provincias}" var="elemento2">
+			<li>${elemento2.getProvincia()}</li>
 		</c:forEach>
 	</ul>
 	<%
